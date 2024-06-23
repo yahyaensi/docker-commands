@@ -1,0 +1,111 @@
+- Docker BUILD
+
+	*) docker build -t IMAGE_NAME:VERSION .
+	
+	*) docker build -t IMAGE_NAME:VERSION . --no-cache
+	
+	*) docker build -t IMAGE_NAME:VERSION . --no-cache --progress=plain (--progress=plain is useful for DEBUGGING because it allows to display any command result like ls or pwd)
+	
+	*) docker build --target dev-stage -t IMAGE_NAME:VERSION . --no-cache
+	
+	
+	
+
+
+- Docker RUN
+
+	*) docker run -d --rm -p 3000:3000 --name CONTAINER_NAME IMAGE_NAME:VERSION     
+																					(-d runs container in background)
+																					(--rm removes the container when the container is stopped)
+																					(-p exposes container port and maps it to host port)
+																					(--name gives a name to container)
+	
+	*) docker run -d --rm -it -p 3000:3000 --name CONTAINER_NAME IMAGE_NAME:VERSION   (run the container and open shell inside this container)
+	
+	*) docker start -a CONTAINER_NAME  (start a container that has been created with docker run)
+	
+	
+	
+- Docker container terminal
+
+	*) docker exec -it CONTAINER_NAME bash  (press ctrl+d to exit the session)
+	
+	*) docker exec -it CONTAINER_NAME sh  (press ctrl+d to exit the session)
+	
+	*) docker exec -it --user root docker-init-test sh
+	
+	
+- Docker STOP
+
+	*) docker kill CONTAINER_ID
+	
+	*) docker stop CONTAINER_ID
+	
+	*) docker stop $(docker ps -q) (Stop all docker containers)
+	
+	Useful link: https://spacelift.io/blog/docker-stop-container
+	
+
+- Docker READ
+
+	*) docker image ls
+	*) docker images
+
+	*) docker ps
+	*) docker container ls
+	*) docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a
+
+	*) docker logs CONTAINER_NAME  (view container logs)
+	
+	*) docker inspect CONTAINER_NAME
+	
+	*) docker inspect CONTAINER_ID
+	
+	*) docker inspect CONTAINER_ID | grep "IPAddress"
+   
+   
+- Docker REMOVE
+
+	*) docker rm CONTAINER_ID
+	*) docker rm $(docker ps -a -q) (remove all docker containers)
+	
+	*) docker image remove -f IMAGE_ID
+	*) docker rmi -f $(docker images -aq) (removes all docker images)
+
+	*) docker system prune
+	
+
+- Docker Service
+
+	*) docker service create -d --replicas=4 --name devtest-service --mount source=myvol2,target=/app nginx:latest
+	
+	*) docker service rm devtest-service
+	
+
+
+- Docker TAG BEFORE PUSH
+
+	*) docker tag IMAGE_NAME:VERSION yahyaromdhane/IMAGE_NAME:VERSION
+
+
+	
+- Docker PUSH
+
+	*) docker push yahyaromdhane/IMAGE_NAME:VERSION
+
+
+
+- Docker PULL
+
+	*) docker pull yahyaromdhane/IMAGE_NAME:VERSION
+
+    *) docker pull mongo:latest
+	
+	
+
+- Docker NETWORK
+
+	*) docker network ls
+	
+	By default docker compose sets up a single network for your app. And your app’s network is given a name based on the “project name”, 
+	originated from the name of the directory it lives in.

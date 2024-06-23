@@ -1,0 +1,29 @@
+*) Path to docker volumes in windows
+   \\wsl.localhost\docker-desktop-data\data\docker\volumes
+
+*) docker volume create VOLUME_NAME
+
+*) docker volume ls
+
+*) docker volume inspect VOLUME_NAME
+
+*) docker volume rm VOLUME_NAME
+
+*) docker volume rm $(docker volume ls -q) (Deletes all docker volumes)
+
+*) docker volume prune
+
+*) MOUNT NAMED VOLUME
+
+		docker run -d --name devtest --mount type=volume,source=yahyawi,target=/app nginx:latest
+		
+		docker run -d --name devtest -v yahyawi:/app nginx:latest
+		
+		
+*) BIND MOUNT
+
+		docker run -d --name devtest --mount type=bind,source="$(pwd)"/target,target=/app nginx:latest
+		docker run -d --name devtest --mount type=bind,source="$(pwd)"/target,target=/app,readonly nginx:latest
+		
+		docker run -d --name devtest  -v "$(pwd)"/target:/app \ nginx:latest
+		docker run -d --name devtest  -v "$(pwd)"/target:/app:ro \ nginx:latest

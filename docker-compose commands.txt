@@ -1,0 +1,51 @@
+*) docker-compose up
+
+*) docker-compose stop
+
+*) docker-compose down
+
+*) docker-compose rm -f  (stop and remove the containers and volumes)
+
+*) docker-compose up --build -d
+
+*) docker-compose build --no-cache
+
+*) docker-compose down && docker-compose build --no-cache && docker-compose up
+
+
+*) BIND MOUNT
+
+services:
+  frontend:
+    image: node:lts
+    volumes:
+      - type: bind
+        source: ./static
+        target: /opt/app/static
+volumes:
+  myapp:
+  
+  
+  
+  
+*) NAMED VOLUME (Running docker compose up for the first time creates a volum) 
+
+services:
+  frontend:
+    image: node:lts
+    volumes:
+      - myapp:/home/node/app
+volumes:
+  myapp:
+  
+  
+*) NAMED VOLUME (Created with docker volume create) 
+
+services:
+  frontend:
+    image: node:lts
+    volumes:
+      - myapp:/home/node/app
+volumes:
+  myapp:
+      external: true
